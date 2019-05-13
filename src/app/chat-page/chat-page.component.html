@@ -1,0 +1,24 @@
+<main>
+  <section class="flex-h">
+    <div style="width:400px;" class="flex-v">
+      <div>
+        Users
+      </div>
+      <div *ngFor="let user of userMap; let i = index;" style="height: 50px;">
+        <div class="flex-1" (click)="fetchMessage(user,i)" style="align-items: center;">{{user.userName}}</div>
+      </div>
+    </div>
+    <div class="flex-1 flex-v" style="height: 100vh;">
+      <div style="height: 80px;">{{currentUser.name}}</div>
+      <div *ngFor="let message of messageList; let i = index;" class="flex-h flex-1"
+        [ngClass]="{'left':message.from !== currentUser, 'right':message.from === currentUser}">
+        <div class="flex-1">{{message.message}}</div>
+        <div style="width:50px">{{message.sentiment}}</div>
+      </div>
+      <div>
+        <input [(ngModel)]="currentMessage">
+        <button (click)="sendMessage()">send</button>
+      </div>
+    </div>
+  </section>
+</main>

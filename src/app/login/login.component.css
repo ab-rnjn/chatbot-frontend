@@ -1,0 +1,135 @@
+.login-form {
+	margin-top: 60px;
+}
+
+form[role=login] {
+	color: #5d5d5d;
+	background: #f2f2f2;
+	padding: 26px;
+	border-radius: 10px;
+	-moz-border-radius: 10px;
+	-webkit-border-radius: 10px;
+}
+	form[role=login] img {
+		display: block;
+		margin: 0 auto;
+		margin-bottom: 35px;
+	}
+	form[role=login] input,
+	form[role=login] button {
+		font-size: 18px;
+		margin: 16px 0;
+	}
+	form[role=login] > div {
+		text-align: center;
+	}
+	
+.form-links {
+	text-align: center;
+	margin-top: 1em;
+	margin-bottom: 50px;
+}
+.form-links a {
+	color: #fff;
+}
+
+
+.user-login-header,.login-image-main{
+    margin-top: 15px;
+}
+.user-login-header h1{
+    font-size: 45px;
+    color:#fff;
+}
+.user-login-header p,.last-part p{
+    color:#c9c5c7;
+}
+.user-login-header span{
+    color:#fff;
+    font-weight: 600;
+}
+.login-image-main{
+    padding: 30px;
+    background-color:#fff;
+    border-radius:5px;
+    box-shadow: 0 0 5px 0 #fff;
+    margin: auto;
+    height: 100vh;
+}
+.user-image-section img{
+    /* background-color: #B56162;
+    padding:30px; */
+    height:85px;
+    /* width:150px;
+    border-radius: 50%; */
+}
+.user-login-box,.last-part{
+    padding:20px;
+    
+}
+.user-login-box a,.user-login-box a:hover{
+    background-color: #92BA33;
+    border:1px solid #92BA33;
+    width: 100%;
+    color:#fff;
+    font-weight:600;
+}
+.last-part a{
+    text-decoration: none;
+    color:#B56162;
+}
+
+
+/* ---------------------------------------------------------------ankur-------------------------------------------------------------------- */
+#login-form{
+    background: #fff;
+    align-items: center;
+    width: 450px;
+    justify-content: center;
+}
+
+#login-form form{
+    height: 350px;
+    width:280px;
+}
+
+#login-form form input{
+    height: 54px;
+    border: none;
+    background: #f0f0f0;
+    box-shadow: none;
+    border: none;
+    text-align: center;
+}
+
+#login-form #forgot-password{
+    color:#4db6f8;
+    text-align: right;
+    font-size: 12px;
+    padding: 10px 0;
+}
+
+#logo-pnl img{
+    height: 118px;
+}
+#logo-pnl p{
+    padding: 20px 0;
+}
+
+#login-form #btn-panel{
+    justify-content: center;
+}
+
+#login-form #btn-panel #login-btn{
+    width: 100px;
+    box-shadow: none;
+    border:none;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+    height: 40px;
+    font-size: 12px;
+    margin-top: 20px
+}
+::placeholder{
+    color: #adadad;
+    font-size: 14px
+}
