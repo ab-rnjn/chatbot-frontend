@@ -30,6 +30,7 @@ import { ChatPageService } from './chat-page/chat-page.service';
     BrowserAnimationsModule,
     HttpClientModule,
     FormsModule,
+    AppRoutingModule,
     ToastrModule.forRoot(),
 
   ],

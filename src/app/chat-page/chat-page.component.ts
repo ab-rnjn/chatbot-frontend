@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ChatPageService } from './chat-page.service';
 import { ToastrService } from 'ngx-toastr';
-import { Observer } from 'rxjs/Observer';
-import { WebSocketSubject } from 'rxjs/observable/dom/WebSocketSubject';
+// import { Observer } from 'rxjs/Observer';
+// import { WebSocketSubject } from 'rxjs/observable/dom/WebSocketSubject';
 import * as socketIo from 'socket.io-client';
 
 @Component({
@@ -26,12 +26,18 @@ export class ChatPageComponent implements OnInit {
     });
   }
   constructor(private chatPageService: ChatPageService, private toastr: ToastrService) {
-    this.socket = socketIo('http://localhost:2000', {
-      extraHeaders: {
-        Authorization: localStorage.getItem('token')
-      }
-    });
-    // this.socket.emit('connect-user', (data) => console.log(data));
+    this.socket = socketIo('http://localhost:2000'
+      // , {
+      //   transportOptions: {
+      //     polling: {
+      //       extraHeaders: {
+      //         Authorization: localStorage.getItem('token')
+      //       }
+      //     }
+      //   }
+      // }
+    );
+    this.socket.emit('connect-user', {token: localStorage.getItem('token')});
     this.onMessage()
       .subscribe((data) => {
         // this.toastr.error(message);
@@ -42,6 +48,7 @@ export class ChatPageComponent implements OnInit {
       });
   }
   ngOnInit() {
+    this.currentUser = { name: '' };
     this.render();
   }
 
@@ -66,7 +73,7 @@ export class ChatPageComponent implements OnInit {
   }
 
   async fetchMessage(user, i) {
-    this.currentUser._id = user;
+    this.currentUser = user;
     if (this.messageMap[this.currentUser._id]) {
       return;
     }
