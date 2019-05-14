@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ChatPageService } from './chat-page.service';
 import { ToastrService } from 'ngx-toastr';
+import { Router } from '@angular/router';
 // import { Observer } from 'rxjs/Observer';
 // import { WebSocketSubject } from 'rxjs/observable/dom/WebSocketSubject';
 import * as socketIo from 'socket.io-client';
@@ -11,7 +12,7 @@ import * as socketIo from 'socket.io-client';
   templateUrl: './chat-page.component.html',
   styleUrls: ['./chat-page.component.css']
 })
-export class ChatPageComponent implements OnInit {
+export class ChatPageComponent implements OnInit, OnDestroy {
 
   public socket;
   public userMap: any[];
@@ -19,13 +20,14 @@ export class ChatPageComponent implements OnInit {
   public messageMap: any = {};
   public currentMessage: string;
   public messageList: any[];
+  public emoji: any;
 
   public onMessage(): Observable<any> {
     return new Observable(observer => {
       this.socket.on('message', (data) => observer.next(data));
     });
   }
-  constructor(private chatPageService: ChatPageService, private toastr: ToastrService) {
+  constructor(private chatPageService: ChatPageService, private toastr: ToastrService, private router: Router) {
     this.socket = socketIo('http://localhost:2000'
       // , {
       //   transportOptions: {
@@ -42,10 +44,14 @@ export class ChatPageComponent implements OnInit {
       .subscribe((data) => {
         // this.toastr.error(message);
         // alert('ccc');
-        console.log('data', data);
-        if (this.messageMap[data.alpha_user]) {
-          this.messageMap[data.alpha_user].push({ message: data.message, sentiment: data.sentiment, to: data.beta_user,
-             from: data.alpha_user });
+        if (!this.messageMap[data.alpha_user]) {
+          this.toastr.success(data.message);
+        }
+        else if (this.messageMap[data.alpha_user]) {
+          this.messageMap[data.alpha_user].push({
+            message: data.message, sentiment: data.sentiment, to: data.beta_user,
+            from: data.alpha_user
+          });
         }
         console.log('messageMap', this.messageMap);
         console.log('=====message came========', data);
@@ -53,6 +59,7 @@ export class ChatPageComponent implements OnInit {
   }
   ngOnInit() {
     this.currentUser = { name: '' };
+    this.emoji = { ':)': 'mood', ':(': 'sentiment_very_dissatisfied', ':|': 'sentiment_satisfied' };
     this.render();
   }
 
@@ -74,7 +81,7 @@ export class ChatPageComponent implements OnInit {
     if (!this.messageMap[this.currentUser._id]) {
       this.messageMap[this.currentUser._id] = [];
     }
-    this.messageMap[this.currentUser._id].push({message: this.currentMessage , sentiment: '', to : this.currentUser._id});
+    this.messageMap[this.currentUser._id].push({ message: this.currentMessage, sentiment: '', to: this.currentUser._id });
     console.log('messagemap', this.messageMap);
     this.socket.emit('message', { beta: this.currentUser._id, message: this.currentMessage, token: localStorage.getItem('token') });
     this.currentMessage = '';
@@ -97,6 +104,14 @@ export class ChatPageComponent implements OnInit {
   }
 
 
+  logout() {
+    window.localStorage.clear();
+    this.router.navigate(['']);
+  }
+
+  ngOnDestroy() {
+    window.localStorage.clear();
+  }
 
 
 

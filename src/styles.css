@@ -35,9 +35,17 @@ body, html {
   }
 
 .padded {
-    padding:20px;
+    padding:10px;
 }
 
 .seperated {
   margin:5px;
+}
+
+.center{
+  align-items: center;
+}
+
+.pointer{
+  cursor: pointer;
 }

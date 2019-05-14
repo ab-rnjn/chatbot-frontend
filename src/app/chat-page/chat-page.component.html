@@ -1,28 +1,35 @@
 <main>
   <section class="flex-h">
-    <div style="width:400px; background: rgb(236, 233, 194);" class="flex-v">
-      <div>
+    <div style="width:400px; background: rgb(236, 233, 194);padding: 20px;" class="flex-v">
+      <div style="text-align: center;">
         Users
       </div>
-      <div *ngFor="let user of userMap; let i = index;" style="height: 50px; border: 2px solid black; padding:14px;" class="flex-h">
-        <div (click)="fetchMessage(user,i)" style="cursor: pointer;">{{user.Name}}</div>
-        <div  style="align-items: center; margin-left: auto;">{{user.Username}}</div>
+      <div *ngFor="let user of userMap; let i = index;"
+        style="height: 60px; border-bottom: 2px dotted black;align-items: center;" class="flex-h">
+        <div (click)="fetchMessage(user,i)" style="cursor: pointer; font-weight: bolder;">{{i+1}}. {{user.Name}}</div>
+        <div style="align-items: center; margin-left: auto; font-size: 14px">~ {{user.Username}}</div>
       </div>
     </div>
-    <div class="flex-1 flex-v" style="height: 100vh; background: rgb(194, 236, 222);">
-      <div style="height: 80px;">{{currentUser.Name}}</div>
+    <div class="flex-1 flex-v" style="height: 100vh; background: rgb(194, 236, 222);padding:30px;">
+      <div class="flex-h center" style="height: 60px;">
+        <div>{{currentUser.Name}}</div>
+        <div class="flex-1"></div>
+        <div class="material-icons pointer" (click)="logout()">power_settings_new</div>
+      </div>
       <section class="flex-1">
-        <div *ngFor="let message of messageList; let i = index;" class="flex-h ">
-          <div class="flex-1 flex-h" >
-            <div [ngClass]="{'flex-1':message.to === currentUser._id}"></div><div>{{message.message}}</div>
+        <div *ngFor="let message of messageList; let i = index;" class="flex-h center">
+          <div class="flex-1 flex-h ">
+            <div [ngClass]="{'flex-1':message.to === currentUser._id}"></div>
+            <div class="chat">
+              {{message.message}}</div>
             <!-- <div [ngClass]="{'left':message.from !== currentUser._id, 'right':message.from === currentUser._id}">{{message.message}}</div> -->
           </div>
-          <div style="width:50px; margin-left:20px;">{{message.sentiment}}</div>
+          <div style="width:50px; margin-left:20px;" class="material-icons">{{emoji[message.sentiment]}}</div>
         </div>
       </section>
-      <div>
-        <input [(ngModel)]="currentMessage">
-        <button (click)="sendMessage()">send</button>
+      <div *ngIf="currentUser._id" style="margin-bottom: 50px;">
+        <input [(ngModel)]="currentMessage" style="width: 80%; height: 30px;">
+        <button (click)="sendMessage()" class="button">send</button>
       </div>
     </div>
   </section>
