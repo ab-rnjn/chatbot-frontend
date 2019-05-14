@@ -12,10 +12,12 @@
     <div class="flex-1 flex-v" style="height: 100vh; background: rgb(194, 236, 222);">
       <div style="height: 80px;">{{currentUser.Name}}</div>
       <section class="flex-1">
-        <div *ngFor="let message of messageList; let i = index;" class="flex-h "
-          [ngClass]="{'left':message.from !== currentUser._id, 'right':message.from === currentUser._id}">
-          <div class="flex-1">{{message.message}}</div>
-          <div style="width:50px">{{message.sentiment}}</div>
+        <div *ngFor="let message of messageList; let i = index;" class="flex-h ">
+          <div class="flex-1 flex-h" >
+            <div [ngClass]="{'flex-1':message.to === currentUser._id}"></div><div>{{message.message}}</div>
+            <!-- <div [ngClass]="{'left':message.from !== currentUser._id, 'right':message.from === currentUser._id}">{{message.message}}</div> -->
+          </div>
+          <div style="width:50px; margin-left:20px;">{{message.sentiment}}</div>
         </div>
       </section>
       <div>

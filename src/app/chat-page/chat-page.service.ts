@@ -37,7 +37,7 @@ export class ChatPageService implements OnInit {
 
     fetchMessage(id) {
         const headers = new HttpHeaders().set('Authorization', localStorage.getItem('token'));
-        const params = new HttpParams().set('user', id);
-        return this.http.get('http://localhost:2000/fetchMessages', {headers, params}).toPromise().then(resp => resp) ;
+        // const params = new HttpParams().set('user', id);
+        return this.http.get('http://localhost:2000/fetchMessages/' + id , {headers}).toPromise().then(resp => resp) ;
     }
 }

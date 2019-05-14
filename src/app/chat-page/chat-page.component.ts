@@ -16,7 +16,7 @@ export class ChatPageComponent implements OnInit {
   public socket;
   public userMap: any[];
   public currentUser: any; // userid
-  public messageMap: any;
+  public messageMap: any = {};
   public currentMessage: string;
   public messageList: any[];
 
@@ -37,14 +37,18 @@ export class ChatPageComponent implements OnInit {
       //   }
       // }
     );
-    this.socket.emit('connect-user', {token: localStorage.getItem('token')});
+    this.socket.emit('connect-user', { token: localStorage.getItem('token') });
     this.onMessage()
       .subscribe((data) => {
         // this.toastr.error(message);
-        if (this.messageMap[data.beta_user]) {
-          this.messageMap[data.beta_user].push({ message: data.message, emoji: data.sentiment });
+        // alert('ccc');
+        console.log('data', data);
+        if (this.messageMap[data.alpha_user]) {
+          this.messageMap[data.alpha_user].push({ message: data.message, sentiment: data.sentiment, to: data.beta_user,
+             from: data.alpha_user });
         }
-        console.log('=====', data);
+        console.log('messageMap', this.messageMap);
+        console.log('=====message came========', data);
       });
   }
   ngOnInit() {
@@ -67,20 +71,28 @@ export class ChatPageComponent implements OnInit {
     if (!this.currentMessage) {
       return;
     }
-    this.messageMap[this.currentUser._id].push(this.currentMessage);
-    this.socket.emit('message', { beta: this.currentUser._id, message: this.currentMessage });
+    if (!this.messageMap[this.currentUser._id]) {
+      this.messageMap[this.currentUser._id] = [];
+    }
+    this.messageMap[this.currentUser._id].push({message: this.currentMessage , sentiment: '', to : this.currentUser._id});
+    console.log('messagemap', this.messageMap);
+    this.socket.emit('message', { beta: this.currentUser._id, message: this.currentMessage, token: localStorage.getItem('token') });
     this.currentMessage = '';
   }
 
   async fetchMessage(user, i) {
     this.currentUser = user;
     if (this.messageMap[this.currentUser._id]) {
+      this.messageList = this.messageMap[this.currentUser._id];
       return;
     }
+    this.messageList = [];
     await this.chatPageService.fetchMessage(user._id).then((res: { error: any, info: any, data: any }) => {
       console.log('>>>>', res);
       this.messageMap[user._id] = res.data;
     });
+    this.messageList = this.messageMap[this.currentUser._id];
+
 
   }
 
