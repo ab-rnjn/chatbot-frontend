@@ -105,11 +105,13 @@ export class ChatPageComponent implements OnInit, OnDestroy {
 
 
   logout() {
+    this.socket.emit('disconnect-user', { token: localStorage.getItem('token') });
     window.localStorage.clear();
     this.router.navigate(['']);
   }
 
   ngOnDestroy() {
+    this.socket.emit('disconnect-user', { token: localStorage.getItem('token') });
     window.localStorage.clear();
   }
 

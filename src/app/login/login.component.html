@@ -1,20 +1,39 @@
-<!-- <ngx-spinner bdColor="rgba(51, 51, 51, 0.8)" size="large" color="#80b145" type="ball-clip-rotate-multiple"></ngx-spinner> -->
-
-<main style="height: 100vh; width:100hw;" class="flex-horizontal">
+<main style="height: 100vh; width:100hw;" class="flex-h">
   <!-- <div class="fe"></div> -->
-  <div id='login-form' class="flex-vertical flex-1" style="justify-content: center;">
-     Login Page
+  <section class="flex-v flex-1" style="justify-content: center; text-align: center; ">
+    <strong style="color:blueviolet;">Login</strong>
     <form class="flex-vertical" style="justify-content: center;">
-
-      <div class="padded">
-        <input type="text" style="width:250px;" placeholder="Enter Username" name="username" required [(ngModel)]="user.username">
-      </div>
-      <div class="padded">
-        <input type="password" style="width:250px;" placeholder="Enter Password" name="password" required [(ngModel)]="user.password">
+      <div>
+        <input type="text" placeholder="Enter Username" name="username" required [(ngModel)]="user.username">
       </div>
       <div>
-        <button type="submit" style="border-radius:100px; background-color: yellowgreen; padding:10px; width:100px; margin-left:90px; " (click)="submit()">Login</button>
+        <input type="password" placeholder="Enter Password" name="password" required [(ngModel)]="user.password">
+      </div>
+      <div style="text-align: center;">
+        <button type="submit" (click)="submit()">Login</button>
       </div>
     </form>
-  </div>
+  </section>
+  <section class="flex-v flex-1" style="justify-content: center; text-align: center; ">
+    <strong style="color:blueviolet;">New User ?</strong>    <form class="flex-vertical" style="justify-content: center;">
+      <div>
+        <input type="text" placeholder="Enter Name" name="name" required [(ngModel)]="new.name">
+      </div>
+      <div class="padded " style="align-items: center;">
+        <input type="text" placeholder="Enter Username" name="username" required [(ngModel)]="new.username">
+      </div>
+      <div (click)="check()" class="pointer"> Check Username</div>
+
+      <div>
+        <input type="email" placeholder="Enter Email" name="email" required [(ngModel)]="new.email">
+      </div>
+      <div>
+        <input type="password" placeholder="Enter Password" name="password" required [(ngModel)]="new.password">
+      </div>
+      <div style="text-align: center;">
+        <button type="submit" (click)="register()">Sign Up</button>
+      </div>
+    </form>
+  </section>
+
 </main>

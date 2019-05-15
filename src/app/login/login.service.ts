@@ -9,25 +9,16 @@ export class LoginService implements OnInit {
     constructor(private http: HttpClient) { }
     ngOnInit() { }
 
-    // putRequest(data) {
-    //     return this.http.put('http://localhost:2000/pages/update', data) ;
-    // }
-
-    // getRequest () {
-    //     return this.http.get('http://localhost:2000/pages/getall').toPromise().then(response => response) ;
-    // }
-
-    // getoneRequest(data) {
-    //     return this.http.get('http://localhost:2000/pages/getone/' + data ).toPromise().then(response => response);
-
-    // }
-
-    // deleteRequest(data) {
-    //     return this.http.delete('http://localhost:2000/pages/delete/' + data ).toPromise().then(response => response) ;
-    // }
+    checkRequest(data) {
+        return this.http.get('http://localhost:2000/checkUsername/' + data ).toPromise().then(response => response) ;
+    }
 
     loginRequest(data) {
         return this.http.post('http://localhost:2000/login', data).toPromise().then(resp => resp);
+    }
+
+    userRequest(data) {
+        return this.http.post('http://localhost:2000/newUser', data).toPromise().then(resp => resp);
     }
 
 
