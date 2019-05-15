@@ -15,7 +15,8 @@ import * as socketIo from 'socket.io-client';
 export class ChatPageComponent implements OnInit, OnDestroy {
 
   public socket;
-  public userMap: any[];
+  public userMap: any;
+  public userList: any[];
   public currentUser: any; // userid
   public messageMap: any = {};
   public currentMessage: string;
@@ -25,6 +26,16 @@ export class ChatPageComponent implements OnInit, OnDestroy {
   public onMessage(): Observable<any> {
     return new Observable(observer => {
       this.socket.on('message', (data) => observer.next(data));
+    });
+  }
+  public joinUser(): Observable<any> {
+    return new Observable(observer => {
+      this.socket.on('connect-user', (data) => observer.next(data));
+    });
+  }
+  public leaveUser(): Observable<any> {
+    return new Observable(observer => {
+      this.socket.on('disconnect-user', (data) => observer.next(data));
     });
   }
   constructor(private chatPageService: ChatPageService, private toastr: ToastrService, private router: Router) {
@@ -56,8 +67,24 @@ export class ChatPageComponent implements OnInit, OnDestroy {
         console.log('messageMap', this.messageMap);
         console.log('=====message came========', data);
       });
+    this.joinUser()
+      .subscribe((data) => {
+        if (this.userMap[data]) {
+          this.userMap[data].status = true;
+        }
+        console.log('user joined ', data);
+      });
+    this.leaveUser()
+      .subscribe((data) => {
+        if (this.userMap[data]) {
+          this.userMap[data].status = false;
+        }
+        console.log('user left ', data);
+
+      });
   }
   ngOnInit() {
+    this.userMap = {};
     this.currentUser = { name: '' };
     this.emoji = { ':)': 'mood', ':(': 'sentiment_very_dissatisfied', ':|': 'sentiment_satisfied' };
     this.render();
@@ -67,7 +94,10 @@ export class ChatPageComponent implements OnInit, OnDestroy {
   async render() {
     await this.chatPageService.fetchUsers().then((res: { error: any, info: any, data: any }) => {
       console.log('>>>>', res);
-      this.userMap = res.data;
+      this.userList = res.data;
+      this.userList.forEach((user) => {
+        this.userMap[user._id] = user;
+      });
     });
     return;
   }

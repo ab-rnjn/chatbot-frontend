@@ -1,11 +1,11 @@
 <main>
   <section class="flex-h">
-    <div style="width:400px; background: rgb(236, 233, 194);padding: 20px;" class="flex-v">
-      <div style="text-align: center;">
+    <div style="width:400px; background: rgb(236, 233, 194);  overflow-y: auto;" class="flex-v">
+      <div style="text-align: center; margin:16px; font-size:20px; ">
         Users
       </div>
-      <div *ngFor="let user of userMap; let i = index;"
-        style="height: 60px; border-bottom: 2px dotted black;align-items: center;" class="flex-h">
+      <div *ngFor="let user of userList; let i = index;" [ngClass]="{'green':user.status}" class="flex-h"
+        style="height: 60px; border-bottom: 2px dotted black;align-items: center; padding:0 20px;" >
         <div (click)="fetchMessage(user,i)" style="cursor: pointer; font-weight: bolder;">{{i+1}}. {{user.Name}}</div>
         <div style="align-items: center; margin-left: auto; font-size: 14px">~ {{user.Username}}</div>
       </div>
